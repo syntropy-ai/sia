@@ -4,7 +4,8 @@
   "description": "Electron based tool for running neural network experiments",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fetch-mnist": "bin/fetch-mnist.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,11 @@
   },
   "homepage": "https://github.com/syntropy-ai/sia#readme",
   "devDependencies": {
-    "electron": "^1.4.10"
+    "electron": "^1.4.10",
+    "minimist": "^1.2.0",
+    "request": "^2.79.0"
+  },
+  "bin": {
+    "fetch-mnist": "bin/fetch-mnist.js"
   }
 }
