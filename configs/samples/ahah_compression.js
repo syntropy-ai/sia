@@ -7,8 +7,8 @@ It adds an additional (optional) reconstruction layer to show reconstruction per
 
 module.exports = {
 	layers: [
-		{ type: 'mnist', id: 'input', input: true, options: {
-			
+		{ type: 'omniglot', id: 'input', input: true, options: {
+
 		}},
 		{ type: 'ahah', id: 'map', options: {
 			totalNeurons: 100
