@@ -11,8 +11,8 @@ const MNISTProps = {
 	totalImages: 60000,
 	imageOffset: 16,
 	labelOffset: 8,
-	imageFile: './input_data/mnist/images',
-	labelFile: './input_data/mnist/labels'
+	imageFile: './input_data/mnist/images_train',
+	labelFile: './input_data/mnist/labels_train'
 };
 
 const MNISTBehaviours = state => ({
