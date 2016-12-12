@@ -40,6 +40,7 @@ jspm_packages
 input_data
 
 #saved weight data folder
+data
 app/data
 
 #mac nonsense
