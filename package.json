@@ -1,0 +1,22 @@
+{
+  "name": "sia",
+  "version": "1.0.0",
+  "description": "Electron based tool for running neural network experiments",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syntropy-ai/sia.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syntropy-ai/sia/issues"
+  },
+  "homepage": "https://github.com/syntropy-ai/sia#readme",
+  "devDependencies": {
+    "electron": "^1.4.10"
+  }
+}

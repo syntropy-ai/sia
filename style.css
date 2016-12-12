@@ -1,0 +1,166 @@
+html, body {
+	font-family: 'Futura PT', Futura, sans-serif;
+	color: #222;
+	background: #F0F0F0;
+	margin: 0;
+	font-size: 14px;
+	padding: 0;
+	line-height: 1.3;
+}
+
+/* Buttons */
+.btn {
+	display: inline-block;
+	padding: 0 1.75em;
+	line-height: 26px;
+	background: #FFF;
+	color: #222;
+	font-weight: 300;
+	border: 1px solid #222;
+	cursor: pointer;
+	transition: background .2s linear, color .2s linear;
+}
+.btn:hover {
+	background: #222;
+	color: #FFF;
+}
+.btn:focus {
+	outline: none;
+}
+.btn-green { border-color: #407A52; color: #407A52; }
+.btn-green:hover { background: #407A52; }
+.btn-orange { border-color: #FAA945; color: #FAA945; }
+.btn-orange:hover { background: #FAA945; }
+.btn-blue {	border-color: #044F67; color: #044F67; }
+.btn-blue:hover {	background: #044F67; }
+.btn-lightblue { border-color: #5D8CAE; color: #5D8CAE; }
+.btn-lightblue:hover { background: #5D8CAE; }
+.btn-lime {	border-color: #8DB255; color: #8DB255; }
+.btn-lime:hover {	background: #8DB255; }
+
+/* Button groups */
+.btn-group {
+	display: inline-block;
+	margin-left: 10px;
+	padding-left: 12px;
+	border-left: 1px solid #EEE;
+}
+.btn-group:first-child {
+	margin-left: 0;
+	padding-left: 0;
+	border-left: none;
+}
+
+/* Inline form */
+.inline-form input,
+.inline-form .btn {
+	height: 26px;
+	line-height: 26px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.inline-form input {
+	padding: 0 10px;
+	border: 1px solid #CCC;
+}
+.inline-form input:focus {
+	box-shadow: none;
+	outline: none;
+	border-color: #AAA;
+}
+.inline-form .btn {
+	margin-left: -6px;
+	position: relative;
+	top: 1px;
+}
+
+/* Boxes */
+.box {
+	margin: 12px;
+	background: #FFF;
+	padding: 15px;
+	border: 1px solid #E3E3E3;
+}
+.box h2 {
+	margin: 0 0 10px;
+	font-weight: normal;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #EEE;
+	font-size: 20px;
+}
+
+#controls {
+	background: #FFF;
+	border-bottom: 1px solid #E3E3E3;
+	padding: 15px;
+}
+
+#renderers {
+	
+}
+.renderer {
+	position: relative;
+}
+.renderer-info {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	display: block;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	opacity: 0;
+	background: #BBB;
+	color: #FFF;
+	border-radius: 100%;
+	cursor: pointer;
+	font-family: Baskerville;
+	font-weight: 500;
+	font-style: italic;
+	font-size: 17px;
+	transition: opacity .2s linear;
+}
+.renderer:hover .renderer-info {
+	opacity: 1;
+}
+
+.canvas-wrap,
+.tensor-wrap {
+	display: inline-block;
+}
+canvas {
+	margin: 1px;
+}
+
+/* Vector renderer */
+.vector-chart {
+	width: 100%;
+	height: 120px;
+	position: relative;
+}
+.vector-bar {
+	position: absolute;
+	bottom: 0;
+	min-width: 1px;
+	background: black;
+}
+
+/* Clickable info */
+[data-func]:hover {
+	cursor: pointer;
+}
+
+/* Comparison table */
+table {
+	width: 100%;
+}
+tr:nth-child(even) td {
+	background: #F1F1F1;
+}
+td {
+	padding: 5px;
+}
+td:first-child {
+	width: 150px;
+}

@@ -1,0 +1,30 @@
+<html>
+<head>
+	<title>Sia</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div id="container">
+		<div id="controls" class="">
+			<div class="btn-group">
+				<button id="play" class="btn btn-green">Play</button>
+				<button id="step" class="btn btn-lime">Step</button>
+			</div>
+			<div class="btn-group">
+				<div class="inline-form">
+					<input id="saveloc" width="20"/>
+					<button id="save" class="btn btn-blue">Save</button>
+				</div>
+			</div>
+			<div class="btn-group">
+				<div class="inline-form">
+					<input id="loadloc" width="20"/>
+					<button id="load" class="btn btn-orange">Load</button>
+				</div>
+			</div>
+		</div>
+		<div id="renders"></div>
+	</div>
+	<script>require('./app/app');</script>
+</body>
+</html>

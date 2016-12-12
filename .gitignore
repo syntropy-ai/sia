@@ -35,3 +35,16 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+#input data folder
+input_data
+
+#saved weight data folder
+app/data
+
+#mac nonsense
+.DS_Store
+
+#personal config folder (keep samples)
+configs/*
+!configs/samples
