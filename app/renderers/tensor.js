@@ -38,19 +38,33 @@ module.exports.create = (tensor, domParent, options = {}) => {
 
 	const { x, y, totalItems } = tensor.dims();
 
-	for(let i=0; i<totalItems; i++){
-		let c = CanvasHelpers.createDataCanvas(x, y, tensor.item(i), options);
+	function buildDataCanvas(data, index, dParent) {
+		const c = CanvasHelpers.createDataCanvas(x, y, data, options);
 		state.canvases.push(c);
 
-		let parent = document.createElement('div');
+		const parent = document.createElement('div');
 		parent.className = 'canvas-wrap';
 		if(typeof options.itemInfoFunc !== 'undefined' && options.itemInfoFunc !== null) {
-			parent.dataset.index = i;
+			parent.dataset.index = index;
 			parent.dataset.func = options.itemInfoFunc;
 		}
 
 		parent.appendChild(c.canvas.domNode);
-		domParent.appendChild(parent);
+		dParent.appendChild(parent);
+	}
+
+	if(options.rowMax){
+		let rowParent;
+		tensor.items().forEach((d, i) => {
+			if(i % options.rowMax === 0){
+				rowParent = document.createElement('div');
+				rowParent.className = 'row-wrap';
+				domParent.appendChild(rowParent);
+			}
+			buildDataCanvas(d, i, rowParent);
+		});
+	}else{
+		tensor.items().forEach((d, i) => buildDataCanvas(d, i, domParent));
 	}
 
 	return Object.assign({}, 
