@@ -15,9 +15,14 @@ module.exports = {
 				const y = Rand.between(0, 1);
 				tensor.item(0).set([x, y]);
 			}
-		}}
+		}},
+		/*{ type: 'som', id: 'som', options: {
+
+		}}*/
 	],
 	renderers: [
-		{ type: 'tensor', title: 'Input', data: ['input'] }
+		{ type: 'mesh_2d', title: 'Kohonen', data: ['input'], options: {
+
+		}}
 	]
 };
