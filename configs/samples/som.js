@@ -12,7 +12,8 @@ module.exports = {
 			mapCols: 15,
 			mapRows: 15,
 			learningSlope: 0.01, // controls how much neighbours learn in comparison to winner
-			learningRate: 0.001
+			learningRate: 0.001,
+			normalised: true
 		}}
 	],
 	renderers: [
