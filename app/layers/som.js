@@ -103,7 +103,6 @@ module.exports.create = (def, previousLayer) => {
 		output: Tensor.create(totalNeurons, 1, inputDims.totalItems),
 		learningRate: options.learningRate || 0.001,
 		learningSlope: options.learningSlope || 0.01,
-		totalOutputFrames: inputDims.totalItems,
 		totalNeurons: totalNeurons,
 		winnerIndex: 0,
 	};

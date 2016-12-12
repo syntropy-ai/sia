@@ -19,7 +19,7 @@ module.exports = {
 		{ type: 'tensor', title: 'Input', data: ['input'], options: { zoom: 1 } },
 		{ type: 'tensor', title: 'Self Organised Map', data: ['map', 'getForwardWeights'], options: {
 			zoom: 1,
-			rowMax: 10
+			rowMax: 15
 		}}	
 	]
 };
