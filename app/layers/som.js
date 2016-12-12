@@ -30,12 +30,14 @@ const SOMBehavious = state => ({
 		const oframe = output.item();
 
 		// calculate the activation vector for the forward pass
-		for(let n=0; n<totalNeurons; n++){
-			oframe[n] = iframe.dot(forwardWeights.item(n));
+		//forwardWeights.dot(iframe, oframe);
+		// calculate the distance from the input to each feature
+		for(var i=0; i<totalNeurons; i++){
+			oframe[i] = iframe.distance(forwardWeights.item(i));
 		}
-
+		
 		// calculate the winning index
-		state.winnerIndex = oframe.maxIndex();
+		state.winnerIndex = oframe.minIndex();
 
 	},
 
@@ -75,7 +77,7 @@ const SOMBehavious = state => ({
 				weightBlock[w] += lRate * (iframe[w] - weightBlock[w]);
 			}
 
-			weightBlock.normalise(1);
+			//weightBlock.normalise(1);
 		}
 	},
 
@@ -110,9 +112,9 @@ module.exports.create = (def, previousLayer) => {
 	// initialise to normalised random weights
 	state.forwardWeights.items().forEach(weights => {
 		for(let i=0; i<weights.length; i++){
-			weights[i] = Rand.between(0.001, 0.002);
+			weights[i] = Rand.between(0.501, 0.502);
 		}
-		weights.normalise(1);
+		//weights.normalise(1);
 	});
 
 	return Object.assign({},

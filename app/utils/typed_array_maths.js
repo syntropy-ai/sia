@@ -32,6 +32,19 @@ if(!proto.dot) {
 }
 
 /***
+Calculate the euclidean distance from another point
+***/
+if(!proto.distance) {
+	proto.distance = function(comparer, root = false) {
+		var dist = 0;
+		for(var i=0, len=this.length; i<len; ++i){
+			dist += Math.pow(this[i] - comparer[i], 2);
+		}
+		return root ? Math.sqrt(dist) : dist;	
+	};
+}
+
+/***
 Add all values in target array to this array
 ***/
 if(!proto.add) {
@@ -150,11 +163,27 @@ if(!proto.max) {
 }
 
 /***
+Find the index of the item with the lowest value in the array
+***/
+if(!proto.minIndex) {
+	proto.minIndex = function() {
+		var min = Number.MAX_VALUE, minIndex = 0;		
+		for(var i=0, len=this.length; i<len; ++i){
+			if(this[i] < min){
+				min = this[i];
+				minIndex = i;
+			}
+		}
+		return minIndex;
+	};
+}
+
+/***
 Find the index of the item with the highest value in the array
 ***/
 if(!proto.maxIndex) {
 	proto.maxIndex = function() {
-		var max = 0, maxIndex = 0;		
+		var max = -Number.MAX_VALUE, maxIndex = 0;		
 		for(var i=0, len=this.length; i<len; ++i){
 			if(this[i] > max){
 				max = this[i];

@@ -16,13 +16,16 @@ module.exports = {
 				tensor.item(0).set([x, y]);
 			}
 		}},
-		/*{ type: 'som', id: 'som', options: {
-
-		}}*/
+		{ type: 'som', id: 'som', options: {
+			mapCols: 15,
+			mapRows: 15,
+			learningSlope: 0.01
+		}}
 	],
 	renderers: [
-		{ type: 'mesh_2d', title: 'Kohonen', data: ['input'], options: {
-
+		{ type: 'mesh_2d', title: 'Kohonen', data: [['input'], ['som', 'getForwardWeights']], options: {
+			meshRowSize: 15,
+			framesPerRender: 100
 		}}
 	]
 };
