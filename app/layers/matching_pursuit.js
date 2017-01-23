@@ -133,6 +133,8 @@ const MatchingPursuitBehaviours = state => ({
 
 	load(fileLocation) {
 		state.weights.load(fileLocation, 'mp');
+		state.normWeights.set(state.weights);
+		state.normWeights.rectify().normaliseItems();
 	}
 	
 });

@@ -10,7 +10,7 @@ module.exports = {
 			
 		}},
 		{ type: 'ahah', id: 'map', options: {
-			totalNeurons: 256
+			totalNeurons: 196
 		}}
 	],
 	renderers: [
