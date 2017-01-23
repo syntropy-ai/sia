@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "fetch-mnist": "bin/fetch-mnist.js",
-    "fetch-omniglot": "bin/fetch-omniglot.js"
+    "fetch-omniglot": "bin/fetch-omniglot.js",
+    "start": "electron . "
   },
   "repository": {
     "type": "git",
