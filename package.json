@@ -27,5 +27,9 @@
   "bin": {
     "fetch-mnist": "bin/fetch-mnist.js",
     "fetch-omniglot": "bin/fetch-omniglot.js"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "pngjs": "^3.0.1"
   }
 }

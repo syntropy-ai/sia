@@ -1,59 +1,60 @@
-
-// Input layer for loading natural image patches from txt file
-
-const LayerBehaviours = require('../layer'),
+// Input layer for loading natural image patches from png file set
+const _ = require('lodash'),
+	fs = require('fs'),
+	LayerBehaviours = require('../layer'),
 	Tensor = require('../tensor'),
-	fs = require('fs');
+	imageHelpers = require('../utils/image_helpers')
 
 const PatchesBehaviours = state => ({
-
 	run(gIteration) {
-		var index = gIteration % state.patches.items().length;
-		state.output.item(0).set(state.patches.item(index));
+		const index = gIteration % state.patches.items().length
+		state.output.item(0).set(state.patches.item(index))
 	}
-});
+})
 
-module.exports.create = def => {
+module.exports.create = ({ options }) => {
 
-	const options = def.options || {};
+	const inset = 2,
+		imageDim = 512,
+		imageSize = imageDim * imageDim,
+		totalImages = 10
 
-	// number of pixels to discard around the image border
-	const inset = 2;
-	const imageDim = 512;
-	const imageSize = imageDim * imageDim;
-	const totalImages = 10;
-
-	const patchDim = options.patchDim || 16;
-	const patchesWide = Math.floor((imageDim - (inset * 2)) / patchDim);
-
-	let data = fs.readFileSync('./input_data/whitened_patches/patches.txt', 'utf8');
-	data = JSON.parse('[' + data + ']');
+	const patchDim = options.patchDim || 16,
+		patchesWide = Math.floor((imageDim - (inset * 2)) / patchDim),
+		patchesPerImage = patchesWide * patchesWide
 
 	const state = {
-		patches: Tensor.create(patchDim, patchDim, totalImages * patchesWide * patchesWide),
+		patches: Tensor.create(patchDim, patchDim, totalImages * patchesPerImage),
 		output: Tensor.create(patchDim, patchDim, 1)
-	};
-
-	// split into 10 images
-	const images = new Array(totalImages);
-	for(var i=0; i<totalImages; i++){
-		images[i] = new Float64Array(imageSize);
-		images[i].set(data.slice(i * imageSize, (i + 1) * imageSize));	
 	}
 
-	// construct the patches
-	const totalPerImage = patchesWide * patchesWide;
-
-	for(var y=0; y<patchesWide; y++){
-		for(var x=0; x<patchesWide; x++){
-			for(var i=0; i<totalImages; i++){
-				const patch = state.patches.item((i * totalPerImage) + (y * patchesWide + x));
-				patch.set(images[i].convolution(imageDim, x*patchDim + inset, y*patchDim + inset, patchDim, patchDim));
+	// read all 10 images into memory
+	const folder = './input_data/whitened_patches/'
+	return Promise.all(_.range(0, 10).map(i => {
+		const buff = fs.readFileSync(`${folder}${i}.png`)
+		return imageHelpers.loadPNG(buff)
+  }))
+	.then(imgDatas => imgDatas.map(({ data }) => {
+		var output = new Float64Array(data.length / 4)
+		for(var i=0, len=output.length; i<len; ++i){
+			var p = i*4
+			output[i] = data[p] / 255
+		}
+		return output
+	}))
+	.then(greyImages => {
+		// convert the image data into patches
+		for(var y=0; y<patchesWide; y++){
+			for(var x=0; x<patchesWide; x++){
+				for(var i=0; i<totalImages; i++){
+					const patch = state.patches.item((i * patchesPerImage) + (y * patchesWide + x))
+					patch.set(greyImages[i].convolution(imageDim, x*patchDim + inset, y*patchDim + inset, patchDim, patchDim))
+				}
 			}
 		}
-	}
 
-	return Object.assign({},
-		LayerBehaviours(state),
-		PatchesBehaviours(state));
-};
+		return Object.assign({},
+			LayerBehaviours(state),
+			PatchesBehaviours(state))
+	})
+}
