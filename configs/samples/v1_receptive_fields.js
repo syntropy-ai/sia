@@ -7,7 +7,7 @@ receptive fields similar to those found in v1 in the visual cortex
 module.exports = {
 	layers: [
 		{ type: 'whitened_patches', id: 'input', input: true, options: {
-			
+
 		}},
 		{ type: 'ahah', id: 'map', options: {
 			totalNeurons: 196

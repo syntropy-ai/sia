@@ -3,6 +3,7 @@ const _ = require('lodash'),
 	fs = require('fs'),
 	LayerBehaviours = require('../layer'),
 	Tensor = require('../tensor'),
+	FileHelpers = require('../utils/file_helpers'),
 	imageHelpers = require('../utils/image_helpers')
 
 const PatchesBehaviours = state => ({
@@ -28,33 +29,27 @@ module.exports.create = ({ options }) => {
 		output: Tensor.create(patchDim, patchDim, 1)
 	}
 
-	// read all 10 images into memory
-	const folder = './input_data/whitened_patches/'
-	return Promise.all(_.range(0, 10).map(i => {
-		const buff = fs.readFileSync(`${folder}${i}.png`)
-		return imageHelpers.loadPNG(buff)
-  }))
-	.then(imgDatas => imgDatas.map(({ data }) => {
-		var output = new Float64Array(data.length / 4)
-		for(var i=0, len=output.length; i<len; ++i){
-			var p = i*4
-			output[i] = data[p] / 255
-		}
-		return output
-	}))
-	.then(greyImages => {
-		// convert the image data into patches
-		for(var y=0; y<patchesWide; y++){
-			for(var x=0; x<patchesWide; x++){
-				for(var i=0; i<totalImages; i++){
-					const patch = state.patches.item((i * patchesPerImage) + (y * patchesWide + x))
-					patch.set(greyImages[i].convolution(imageDim, x*patchDim + inset, y*patchDim + inset, patchDim, patchDim))
-				}
+	// read all images into memory
+	const folder = './input_data/whitened_patches'
+	const imageBlock = FileHelpers.loadBuffer(`${folder}/whitened_patches.bin`)
+
+	// create the typed image blocks
+	const greyImages = new Array(totalImages)
+	for(var i=0; i<totalImages; i++){
+		greyImages[i] = new Float64Array(imageBlock, Float64Array.BYTES_PER_ELEMENT * imageSize, imageSize)
+	}
+
+	// convert the data into image patches
+	for(var y=0; y<patchesWide; y++){
+		for(var x=0; x<patchesWide; x++){
+			for(var i=0; i<totalImages; i++){
+				const patch = state.patches.item((i * patchesPerImage) + (y * patchesWide + x))
+				patch.set(greyImages[i].convolution(imageDim, x*patchDim + inset, y*patchDim + inset, patchDim, patchDim))
 			}
 		}
+	}
 
-		return Object.assign({},
-			LayerBehaviours(state),
-			PatchesBehaviours(state))
-	})
+	return Object.assign({},
+		LayerBehaviours(state),
+		PatchesBehaviours(state))
 }
