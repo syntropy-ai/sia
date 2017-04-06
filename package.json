@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "fetch-mnist": "bin/fetch-mnist.js",
     "fetch-omniglot": "bin/fetch-omniglot.js",
+    "fetch-whitened-patches": "bin/fetch-whitened-patches.js",
     "start": "electron . "
   },
   "repository": {
@@ -22,7 +23,8 @@
   "devDependencies": {
     "electron": "^1.4.10",
     "minimist": "^1.2.0",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "unzipper": "^0.8.8"
   },
   "bin": {
     "fetch-mnist": "bin/fetch-mnist.js",
