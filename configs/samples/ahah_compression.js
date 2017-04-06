@@ -20,8 +20,8 @@ module.exports = {
 		}}
 	],
 	renderers: [
-		{ type: 'tensor', title: 'Input', data: ['input'], options: { zoom: 1 } },
-		{ type: 'tensor', title: 'Reconstruction', data: ['recon'] },
+		{ type: 'tensor', title: 'Input', data: ['input'], options: { zoom: 2 } },
+		{ type: 'tensor', title: 'Reconstruction', data: ['recon'], options: { zoom: 2 } },
 		{ type: 'tensor', title: 'Forward weights', data: ['map', 'getForwardWeights'], options: { zoom: 1 } },
 		{ type: 'tensor', title: 'Reconstruction weights', data: ['recon', 'getWeights'] }		
 	]

@@ -69,7 +69,9 @@ const AntiHebbianBehaviours = state => ({
 		}
 
 		// process loop
-		for(var pass=0; pass<1; pass++){
+		
+		
+		for(var pass=0; pass<3; pass++){
 			var nextWinner = bframe.maxIndex();
 
 			//console.log(bframe[nextWinner]);
@@ -78,8 +80,9 @@ const AntiHebbianBehaviours = state => ({
 			const winY = Math.floor(nextWinner / sheetDim);
 			const winX = nextWinner % sheetDim; 
 
-			this.processCluster(sheetDim, clusterRadius, winX, winY, bframe, oframe);
+			this.processCluster(sheetDim, clusterRadius, winX, winY, bframe, tframe, oframe);
 		}
+		
 
 
 		/*
@@ -151,8 +154,8 @@ const AntiHebbianBehaviours = state => ({
 
 				if(xRel >= 0 && xRel < sheetDim && yRel >= 0 && yRel < sheetDim){
 					var activation = data[yRel * sheetDim + xRel];
-					//score += activation * activation;
-					score += activation;
+					score += activation * activation;
+					//score += activation;
 				}
 			}
 		}
@@ -160,7 +163,7 @@ const AntiHebbianBehaviours = state => ({
 		return score;
 	},
 
-	processCluster(sheetDim, clusterRadius, winX, winY, temp, output) {
+	processCluster(sheetDim, clusterRadius, winX, winY, scores, temp, output) {
 
 		const aY = Math.max(0, winY - clusterRadius);
 		const bY = Math.min(sheetDim - 1, winY + clusterRadius);
@@ -170,8 +173,9 @@ const AntiHebbianBehaviours = state => ({
 			for(var x=aX; x<=bX; x++){
 				var pos = y * sheetDim + x;
 				output[pos] = temp[pos];
+				scores[pos] = 0;				
+				//output[pos] = Math.max(temp[pos], 0.5);
 				temp[pos] = 0;
-				//output[pos] = Math.max(temp[pos], 0.1);
 			}
 		}
 	},
@@ -218,8 +222,8 @@ const AntiHebbianBehaviours = state => ({
 			}
 
 			// update the learning rate for the neuron
-			lRates[fn] += 0.1 * (oframe[fn] * oframe[fn]);
-			lRates[fn] = Math.min(lRates[fn], 500);
+			lRates[fn] += (oframe[fn] * oframe[fn]);
+			//lRates[fn] = Math.min(lRates[fn], 500);
 		}
 	},
 
@@ -257,7 +261,7 @@ module.exports.create = (def, previousLayer) => {
 		lateralPasses: 10,
 		totalNeurons: totalNeurons,
 		learningRates: Tensor.create(totalNeurons),
-		learningRate: 0.01,
+		learningRate: 0.001,
 		sheetDim: options.sheetDim,
 		clusterRadius: options.clusterRadius,
 		tempOutput: Tensor.create(totalNeurons),
@@ -269,7 +273,7 @@ module.exports.create = (def, previousLayer) => {
 		for(let i=0; i<weights.length; i++){
 			weights[i] = Rand.gaussian(-1, 1);
 		}
-		weights.normalise(2);
+		weights.normalise(3);
 	});
 
 	// initialise the lateral weights
@@ -277,10 +281,10 @@ module.exports.create = (def, previousLayer) => {
 		for(let w=0; w<weights.length; w++){
 			weights[w] = 0.001;//Rand.gaussian(0, 1);
 		}
-		weights.normalise(1);
+		weights.normalise(2);
 	});
 
-	state.learningRates.fill(100);
+	state.learningRates.fill(1000);
 
 	return Object.assign({},
 		LayerBehaviours(state),
