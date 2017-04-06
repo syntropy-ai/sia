@@ -16,7 +16,7 @@ module.exports = {
 		}},
 		{ type: 'matching_pursuit', id: 'map', options: {
 			initWeights,
-			totalFeatures: 1000
+			totalFeatures: 100
 		}}
 	],
 	renderers: [
