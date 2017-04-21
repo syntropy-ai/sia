@@ -18,12 +18,12 @@ const AntiHebbianBehaviours = state => ({
 	},
 
 
-	// do a forward propagation with a given number of lateral passes 
+	// do a forward propagation with a given number of lateral passes
 	propagate(input, gIteration) {
 
 		const {
 			totalNeurons,
-			forwardWeights, 
+			forwardWeights,
 			forwardActivations,
 			lateralWeights,
 			output,
@@ -71,7 +71,8 @@ const AntiHebbianBehaviours = state => ({
 
 			if(oframe[fn] <= 0) { continue; }
 
-			const lr = 1 / lRates[fn];
+			//const lr = 1 / lRates[fn];
+			const lr = 0.01;
 
 			// forward weight update
 			const weightBlock = forwardWeights.item(fn);
@@ -87,7 +88,7 @@ const AntiHebbianBehaviours = state => ({
 			for(let w=0; w<totalNeurons; w++){
 				if(fn !== w){
 					lateralWeightBlock[w] += oframe[fn] * (oframe[w] - lateralWeightBlock[w] * oframe[fn]) * lr;
-				}					
+				}
 			}
 
 			// update the learning rate for the neuron
