@@ -56,7 +56,7 @@ const MNISTBehaviours = state => ({
 		transformCanvas.draw(digitCanvas);
 
 		// get a new image data
-		const imgData = transformCanvas.getImageData();
+		const imgData = transformCanvas.ctx.getImageData(state.wstartx, state.wstarty, state.wsize, state.wsize);
 
 		// write the layer output
 		const raw = output.item(0);
