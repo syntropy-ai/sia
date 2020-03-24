@@ -12,15 +12,23 @@ initWeights.normalise();
 module.exports = {
 	layers: [
 		{ type: 'mnist', id: 'input', input: true, options: {
-			
+			translateRange: 2
 		}},
 		{ type: 'matching_pursuit', id: 'map', options: {
 			initWeights,
-			totalFeatures: 100
+			totalFeatures: 800,
+			sparseThreshold: 1.4,
+			log: true
+		}},
+		{ type: 'reconstruction', id: 'recon', options: {
+			x: 28, y: 28,
+			learningLayerId: 'input'
 		}}
 	],
 	renderers: [
 		{ type: 'tensor', title: 'Input', data: ['input'], options: { zoom: 1 } },
+		{ type: 'tensor', title: 'Reconstruction', data: ['recon'], options: { zoom: 1 } },
+		{ type: 'tensor', title: 'Full Reconstruction', data: ['map', 'getFullReconstructions'], options: { zoom: 1 } },
 		{ type: 'tensor', title: 'Dictionary', data: ['map', 'getNormWeights'], options: { zoom: 1 } }
 	]
 };

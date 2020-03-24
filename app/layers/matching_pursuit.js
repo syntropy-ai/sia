@@ -41,7 +41,8 @@ const MatchingPursuitBehaviours = state => ({
 		iframeCopy.set(iframe);
 
 		activations.fill(0); 
-		fullReconstruction.fill(0);		
+		fullReconstruction.fill(0);	
+		const fframe = fullReconstruction.item(0)	
 		
 		// set feature vector to threshold so all are recalculated on first pass
 		featureVector.fill(sparseThreshold);
@@ -75,7 +76,7 @@ const MatchingPursuitBehaviours = state => ({
 
 			// do the subtraction/add
 			iframeCopy.subtract(recon);
-			fullReconstruction.add(recon);
+			fframe.add(recon);
 
 			// set the output
 			activations[winner] = max;
@@ -90,7 +91,7 @@ const MatchingPursuitBehaviours = state => ({
 			const weightBlock = weights.item(winner);
 			const scale = activations[winner];
 			for(let w=0, len=weightBlock.length; w<len; ++w){
-				weightBlock[w] += scale * (iframe[w] - fullReconstruction[w]) * learningRate;
+				weightBlock[w] += scale * (iframe[w] - fframe[w]) * learningRate;
 			}
 
 			const norm = normWeights.item(winner);
@@ -155,7 +156,7 @@ module.exports.create = (def, previousLayer) => {
 		featureVector: new Float64Array(options.totalFeatures),
 		winners: new Uint32Array(options.totalFeatures),
 		reconstructions: Tensor.create(inputDims.x, inputDims.y, options.totalFeatures),
-		fullReconstruction: new Float64Array(inputDims.x * inputDims.y),
+		fullReconstruction: Tensor.create(inputDims.x * inputDims.y),
 		sparseThreshold: options.sparseThreshold || 1.8,
 		learningRate: 0.001,
 		avgError: 0
@@ -166,7 +167,7 @@ module.exports.create = (def, previousLayer) => {
 		state.normWeights.setItems(options.initWeights);
 	}else{				
 		var memWeights = state.weights.getMem();
-		var memNorms = state.weights.getMem();
+		var memNorms = state.normWeights.getMem();
 
 		for(var i=0; i<memWeights.length; i++){
 			memWeights[i] = Rand.between(options.minWeight || 0, options.maxWeight || 1);
