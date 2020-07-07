@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/syntropy-ai/sia#readme",
   "devDependencies": {
-    "electron": "^1.4.10",
+    "electron": "^9.1.0",
     "minimist": "^1.2.0",
     "request": "^2.79.0",
     "unzipper": "^0.8.8"
